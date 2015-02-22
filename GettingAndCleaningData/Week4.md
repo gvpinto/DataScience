@@ -1,4 +1,9 @@
-# DataScience
+Week 4 Quiz
+===========
+-------------------------------------------------------------------------------
+Question 1
+
+
 ***
 ###Links and References
 
@@ -13,3 +18,32 @@
 >[Quick-R](http://statmethods.net/)
 
 >[Peer Review Experiment Data](http://www.plosone.org/article/info:doi/10.1371/journal.pone.0026895)
+
+***
+### Functions and Libraries
+
+
+**String functions**
+```
+tolower()
+toupper()
+strsplit()
+list()
+sapply()
+sub()
+gsub()
+grep()
+grepl()
+```
+**library(stringr)**
+```
+nchar()
+substr()
+paste()
+paste0()
+str_trim()
+
+```
+***
+
+
