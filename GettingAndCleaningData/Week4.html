@@ -55,8 +55,58 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div id="week-4-quiz" class="section level1">
 <h1>Week 4 Quiz</h1>
 <hr />
-<p>Question 1</p>
+<div id="question-1" class="section level4">
+<h4>Question 1</h4>
+<p>The American Community Survey distributes downloadable data about United States communities. Download the 2006 microdata survey about housing for the state of Idaho using download.file() from here:</p>
+<p><a href="https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv">https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv</a></p>
+<p>and load the data into R. The code book, describing the variable names is here:</p>
+<p><a href="https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FPUMSDataDict06.pdf">https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FPUMSDataDict06.pdf</a></p>
+<p>Apply strsplit() to split all the names of the data frame on the characters “wgtp”. What is the value of the 123 element of the resulting list?</p>
+<pre><code>library(data.table)
+if (!file.exists(&quot;./data&quot;)) {dir.create(&quot;./data&quot;)}
+fileURL &lt;- &quot;https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv&quot;
+download.file(fileURL, destfile = &quot;./data/us-acs-hid.csv&quot;, method = &quot;curl&quot;)
+usacshid &lt;- fread(&quot;./data/us-acs-hid.csv&quot;, stringsAsFactors = FALSE, sep = &quot;,&quot;)
+splitNames &lt;- strsplit(names(usacshid), &quot;wgtp&quot;)
+splitNames[123]
+</code></pre>
 <hr />
+</div>
+<div id="question-2" class="section level4">
+<h4>Question 2</h4>
+<p>Load the Gross Domestic Product data for the 190 ranked countries in this data set:</p>
+<p><a href="https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv">https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv</a></p>
+<p>Remove the commas from the GDP numbers in millions of dollars and average them. What is the average?</p>
+<p>Original data sources: <a href="http://data.worldbank.org/data-catalog/GDP-ranking-table">http://data.worldbank.org/data-catalog/GDP-ranking-table</a></p>
+<p><strong>Answer</strong></p>
+<p><code>&quot;&quot; &quot;15&quot;</code></p>
+<pre><code>library(data.table)
+if (!file.exists(&quot;./data&quot;)) {dir.create(&quot;./data&quot;)}
+fileURL &lt;- &quot;https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv&quot;
+download.file(fileURL, destfile = &quot;./data/FGDP.csv&quot;, method = &quot;curl&quot;)
+FGDP &lt;- fread(&quot;./data/FGDP.csv&quot;, stringsAsFactors = FALSE, sep = &quot;,&quot;, header = &quot;auto&quot;, skip=&quot;,Ranking&quot;)
+str(FGDP)
+head(FGDP, 500)
+colnames(FGDP)[5] &lt;- &quot;GDP&quot; 
+FGDP$GDP &lt;- gsub(&quot;,&quot;, &quot;&quot;, FGDP$GDP)
+FGDP$GDP &lt;- as.numeric(FGDP$GDP)
+FGDP[Ranking != &quot;&quot;, mean(GDP, na.rm = TRUE) ]</code></pre>
+<p><strong>Answer</strong></p>
+<p><code>377652.4</code></p>
+<hr />
+</div>
+<div id="question-3" class="section level4">
+<h4>Question 3</h4>
+<p>In the data set from Question 2 what is a regular expression that would allow you to count the number of countries whose name begins with “United”? Assume that the variable with the country names in it is named countryNames. How many countries begin with United?</p>
+<pre><code>str(FGDP)
+countryNames &lt;- FGDP[, Economy]
+grep(&quot;^United&quot;, countryNames, value = TRUE)
+</code></pre>
+<p><strong>Answer</strong></p>
+<p><code>grep(&quot;^United&quot;,countryNames), 3</code></p>
+<hr />
+<hr />
+</div>
 <div id="links-and-references" class="section level3">
 <h3>Links and References</h3>
 <blockquote>
@@ -98,20 +148,9 @@ paste()
 paste0()
 str_trim()
 </code></pre>
-<hr />
-<ol style="list-style-type: decimal">
-<li><p>Glenn</p>
-<ul>
-<li>Pinto</li>
-</ul></li>
-</ol>
-<ul>
-<li><p>Renne</p></li>
-<li>Hello</li>
-<li><p>PInto</p></li>
-</ul>
-<p><em>Glenn</em></p>
-<p><code>Pito</code></p>
+<p><strong>Regular Expressions</strong></p>
+<p>Used with grep, grepl, sub, gsub</p>
+<p><strong>Working with Dates</strong></p>
 </div>
 </div>
 
